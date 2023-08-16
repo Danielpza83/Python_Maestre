@@ -1,0 +1,58 @@
+{% extends 'aplicacion/base.html' %}
+{% load static %}
+
+{% block  title %}
+    <title>Resultados Peliculas</title>
+{% endblock title %}
+
+
+{% block cabecera %}
+<header class="bg-dark py-5">
+    <div class="container px-5">
+        <div class="row gx-5 justify-content-center">
+            <div class="col-lg-6">
+                <div class="text-center my-5">
+                    <h1 class="display-5 fw-bolder text-white mb-2" >¡Resultado de busqueda!</h1>
+                    <p class="lead text-white-50 mb-4">¡Checa la selección de películas que tenemos para tí!</p>
+                    <p class="lead text-white-50 mb-4">Resultados</p>
+                    <form action="/aplicacion/buscar" method="get">
+                        {% csrf_token %}
+                        <input type="text" name="titulo" id="titulo">
+                        <input type="submit" value="Buscar">
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+{% endblock cabecera %}
+
+{% block contenido %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Título</th>
+                <th>Director</th>
+                <th>Productora</th>
+                <th>Protagonista</th>
+                <th>Género</th>
+                <th>Fecha de Estreno</th>
+                <th>Cantidad</th>
+            </tr>
+        </thead>
+        {% for Peliculas in genero %}
+        <tbody>
+            <tr>
+                <td>{{ Peliculas.titulo }}</td>
+                <td>{{ Peliculas.director }}</td>
+                <td>{{ Peliculas.productora }}</td>
+                <td>{{ Peliculas.actor_protagonista }}</td>
+                <td>{{ Peliculas.genero }}</td>
+                <td>{{ Peliculas.fecha_estreno }}</td>
+                <td>{{ Peliculas.cantidad }}</td>
+            </tr>
+        </tbody>
+        {% endfor %}
+    </table>  
+{% endblock contenido %} 

@@ -1,0 +1,68 @@
+{% extends 'aplicacion/base.html' %}
+{% load static %}
+
+{% block  title %}
+    <title>Resultados Peliculas</title>
+{% endblock title %}
+
+
+{% block cabecera %}
+<header class="bg-dark py-5">
+    <div class="container px-5">
+        <div class="row gx-5 justify-content-center">
+            <div class="col-lg-6">
+                <div class="text-center my-5">
+                    <h1 class="display-5 fw-bolder text-white mb-2" >¡Resultado de busqueda!</h1>
+                    <p class="lead text-white-50 mb-4">¡Checa la selección de Videjuegos que tenemos para tí!</p>
+                    <p class="lead text-white-50 mb-4">Resultados</p>
+                    <form action="/aplicacion/buscarConsolas" method="get">
+                        {% csrf_token %}
+                        <select name="consolas" id="consolas">
+                            <option value="PLAYSTATION_4">PlayStation 4</option>
+                            <option value="PLAYSTATION_5">PlayStation 5</option>
+                            <option value="NINTENDO_SWITCH">Nintendo Switch</option>
+                            <option value="XBOX_ONE">Xbox One</option>
+                            <option value="PC">PC</option>
+                            <option value="OTROS">Otros</option>
+                        </select>
+                        <input type="submit" value="Buscar">
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+{% endblock cabecera %}
+
+{% block contenido %}
+<section id="scroll">
+    <h1 class="text-center">Videojuegos</h1>
+    <table class="table">
+        <thead>
+            <tr> 
+                <th>Título</th>
+                <th>Director</th>
+                <th>Productora</th>
+                <th>Género</th>
+                <th>Fecha de Estreno</th>
+                <th>Cantidad</th>
+                <th>Consola</th>
+            </tr>
+        </thead>
+        {% for Videojuegos in videojuegos %}
+        <tbody>
+            <tr>
+                <td>{{ Videojuegos.titulo }}</td>
+                <td>{{ Videojuegos.director }}</td>
+                <td>{{ Videojuegos.productora }}</td>
+                <td>{{ Videojuegos.genero }}</td>
+                <td>{{ Videojuegos.fecha_estreno }}</td>
+                <td>{{ Videojuegos.cantidad }}</td>
+                <td>{{ Videojuegos.consolas }}</td>
+            </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+</section>
+{% endblock contenido %}

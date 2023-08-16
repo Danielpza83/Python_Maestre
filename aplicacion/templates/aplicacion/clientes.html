@@ -1,0 +1,73 @@
+{% extends 'aplicacion/base.html' %}
+{% load static %}
+
+{% block cabecera %}
+<header class="bg-dark py-5">
+    <div class="container px-5">
+        <div class="row gx-5 justify-content-center">
+            <div class="col-lg-6">
+                <div class="text-center my-5">
+                    <h1 class="display-5 fw-bolder text-white mb-2" >¡Conoce a más personas!</h1>
+                    <p class="lead text-white-50 mb-4">¡Aquí encontrarás a otras personas que comparten el mismo hobby que tu!</p>
+                    <p class="lead text-white-50 mb-4">¿Qué quieres ver?</p>
+                    <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
+                        <a class="btn btn-light" href={% url  'buscarPelicula' %}>Películas</a>
+                        <a class="btn btn-light" href={% url 'buscarVideojuegos' %}>Videojuegos</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+{% endblock cabecera %}
+
+{% block contenido %}
+<section id="scroll">
+    <h1 class="text-center">Amigos</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Email</th>
+                    <th>Direccion</th>
+                    {% if user.is_authenticated %}
+                    <th>Acciones</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            {% for Clientes in clientes %}
+            <tbody>
+                <tr>
+                    <td>{{ Clientes.nombre }}</td>
+                    <td>{{ Clientes.apellido }}</td>
+                    <td>{{ Clientes.email }}</td>
+                    <td>{{ Clientes.direccion }}</td>
+                    {% if user.is_authenticated %}
+                    <td>
+                        <a
+                            href="{% url 'updateClientes' Clientes.id %}"
+                            class="btn btn-primary"
+                            style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
+                            ><i class="bi bi-pencil-square" title="Edit Record"></i>
+                        </a>
+                        <a
+                            href="{% url 'deleteClientes' Clientes.id %}"
+                            class="btn btn-danger"
+                            style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
+                            ><i class="bi bi-trash" title="Delete Record"></i>
+                        </a>
+                    </td>
+                    {% endif %}
+                </tr>
+            </tbody>
+            {% endfor %}
+        </table>
+</section>
+{% if user.is_authenticated %}
+<div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
+    <a class="btn btn-dark" href={% url 'clientesForm' %}>Agrega un Amigo</a>
+</div>
+{% endif %}
+<br>
+{% endblock contenido %}

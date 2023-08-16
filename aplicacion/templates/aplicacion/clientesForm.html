@@ -1,0 +1,44 @@
+{% extends 'aplicacion/base.html' %}
+{% load static %}
+
+{% block cabecera %}
+<header class="bg-dark py-5">
+    <div class="container px-5">
+        <div class="row gx-5 justify-content-center">
+            <div class="col-lg-6">
+                <div class="text-center my-5">
+                    <h1 class="display-5 fw-bolder text-white mb-2" >¡Conoce a más personas!</h1>
+                    <p class="lead text-white-50 mb-4">¡Aquí encontrarás a otras personas que comparten el mismo hobby que tu!</p>
+                    <p class="lead text-white-50 mb-4">¿Qué quieres ver?</p>
+                    <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
+                        <a class="btn btn-light" href={% url  'buscarPelicula' %}>Películas</a>
+                        <a class="btn btn-light" href={% url 'buscarVideojuegos' %}>Videojuegos</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+{% endblock cabecera%}
+
+
+{% block contenido %}
+{% block buscarClientes%}
+<div class="container-fluid px-5">
+    <br>
+    <div class="row gx-5 justify-content">
+<br>
+<br>
+    <h2>¡Añade a un Amigo!</h2>
+        <form action="" method="POST">
+                {% csrf_token %}
+            <table>
+                    {{ form.as_table}}
+            </table>
+            <input type="submit" value="Enviar">
+        </form>
+        </div>
+    </div>
+<br>
+{% endblock buscarClientes%}
+{% endblock contenido %}

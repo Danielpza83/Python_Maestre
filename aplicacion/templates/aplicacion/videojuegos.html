@@ -1,0 +1,76 @@
+{% extends 'aplicacion/base.html' %}
+{% load static %}
+
+{% block cabecera %}
+<header class="bg-dark py-5">
+    <div class="container px-5">
+        <div class="row gx-5 justify-content-center">
+            <div class="col-lg-6">
+                <div class="text-center my-5">
+                    <h1 class="display-5 fw-bolder text-white mb-2" >¡Conoce nuestro listado de Videojuegos!</h1>
+                    <p class="lead text-white-50 mb-4">¡Aquí encontrarás todos los videojuegos disponibles!</p>
+                    <p class="lead text-white-50 mb-4">¿Quieres ver algo más?</p>
+                    <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
+                        <a class="btn btn-light" href={% url  'buscarClientes' %}>Amigos</a>
+                        <a class="btn btn-light" href={% url 'buscarPelicula' %}>Películas</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+{% endblock cabecera %}
+
+{% block contenido %}
+<section id="scroll">
+    <h1 class="text-center">Videojuegos</h1>
+    <table class="table">
+        <thead>
+            <tr> 
+                <th>Título</th>
+                <th>Director</th>
+                <th>Productora</th>
+                <th>Género</th>
+                <th>Fecha de Estreno</th>
+                <th>Cantidad</th>
+                <th>Consola</th>
+            </tr>
+        </thead>
+        {% for Videojuegos in videojuegos %}
+        <tbody>
+            <tr>
+                <td>{{ Videojuegos.titulo }}</td>
+                <td>{{ Videojuegos.director }}</td>
+                <td>{{ Videojuegos.productora }}</td>
+                <td>{{ Videojuegos.genero }}</td>
+                <td>{{ Videojuegos.fecha_estreno }}</td>
+                <td>{{ Videojuegos.cantidad }}</td>
+                <td>{{ Videojuegos.consolas }}</td>
+                {% if user.is_authenticated %}
+                <td>
+                    <a
+                        href="{% url 'updateVideojuegos' Videojuegos.id %}"
+                        class="btn btn-primary"
+                        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
+                        ><i class="bi bi-pencil-square" title="Edit Record"></i>
+                    </a>
+                    <a
+                        href="{% url 'deleteVideojuegos' Videojuegos.id %}"
+                        class="btn btn-danger"
+                        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
+                        ><i class="bi bi-trash" title="Delete Record"></i>
+                    </a>
+                </td>
+                {% endif %}
+            </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+</section>
+{% if user.is_authenticated %}
+<div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
+    <a class="btn btn-dark" href={% url 'videojuegosForm' %}>Agrega un Videojuego</a>
+</div>
+{% endif %}
+<br>
+{% endblock contenido %}

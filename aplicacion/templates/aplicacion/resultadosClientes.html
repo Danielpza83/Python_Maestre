@@ -1,0 +1,56 @@
+{% extends 'aplicacion/base.html'%}
+{% load static %}
+
+{% block  title %}
+    <title>Resultados Peliculas</title>
+{% endblock title %}
+
+
+{% block cabecera %}
+<header class="bg-dark py-5">
+    <div class="container px-5">
+        <div class="row gx-5 justify-content-center">
+            <div class="col-lg-6">
+                <div class="text-center my-5">
+                    <h1 class="display-5 fw-bolder text-white mb-2" >¡Resultado de busqueda!</h1>
+                    <p class="lead text-white-50 mb-4">¡Checa los Amigos que coinciden con la búsqueda!</p>
+                    <p class="lead text-white-50 mb-4">Resultados</p>
+                    <form action="/aplicacion/buscarNombre" method="get">
+                        {% csrf_token %}
+                        <input type="text" name="nombre" id="nombre">
+                        <input type="submit" value="Buscar">
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+{% endblock cabecera %}
+
+
+{% block contenido %}
+<section id="scroll">
+    <h1 class="text-center">Amigos</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Email</th>
+                    <th>Direccion</th>
+                </tr>
+            </thead>
+            {% for Clientes in clientes %}
+            <tbody>
+                <tr>
+                    <td>{{ Clientes.nombre }}</td>
+                    <td>{{ Clientes.apellido }}</td>
+                    <td>{{ Clientes.email }}</td>
+                    <td>{{ Clientes.direccion }}</td>
+                </tr>
+            </tbody>
+            {% endfor %}
+        </table>
+</section>
+{% endblock contenido %}

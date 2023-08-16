@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% load static %}
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Maestre's Inc</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href={% static 'aplicacion/css/styles.css' %} rel="stylesheet" />
+    </head>
+    <body>
+        <!-- Responsive navbar-->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container px-5">
+                <a class="navbar-brand" href={% url 'inicio' %}>Maestre's Inc</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href={% url 'inicio' %}>Home</a></li>
+                        {% if user.is_authenticated %}
+                        <li class="nav-item"><a class="nav-link" href={% url 'clientes' %}>Amigos</a></li>
+                        <li class="nav-item"><a class="nav-link" href={% url  'peliculas' %}>Peliculas</a></li>
+                        <li class="nav-item"><a class="nav-link" href={% url 'videojuegos' %}>Videojuegos</a></li>
+                        <li class="nav-item"><a class="nav-link" href={% url 'admin:index' %}>Admin</a></li>
+                        <li class="nav-item"><a class="nav-link" href={% url 'editProfile' %}>Edit Profile</a></li>
+                        <li class="nav-item"><a class="nav-link" href={% url 'logout' %}>Logout</a></li>
+                        <li class="nav-item"><a class="nav-link" href={% url 'aboutme' %}>About me</a></li>
+                        <div class="text-center">
+                            <a href={% url 'addAvatar' %}>
+                            <img src="{{ request.session.avatar }}" height="40px" weight="40px"/>
+                            </a>
+                        </div>
+                        {% else %}
+                        <li class="nav-item"><a class="nav-link" href={% url 'clientes' %}>Amigos</a></li>
+                        <li class="nav-item"><a class="nav-link" href={% url  'peliculas' %}>Peliculas</a></li>
+                        <li class="nav-item"><a class="nav-link" href={% url 'videojuegos' %}>Videojuegos</a></li>
+                        <li class="nav-item"><a class="nav-link" href={% url 'login' %}>Login</a></li>
+                        <li class="nav-item"><a class="nav-link" href={% url 'register' %}>Register</a></li>
+                        <li class="nav-item"><a class="nav-link" href={% url 'admin:index' %}>Admin</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Header-->
+        {% block cabecera %}
+        <header class="bg-dark py-5">
+            <div class="container px-5">
+                <div class="row gx-5 justify-content-center">
+                    <div class="col-lg-6">
+                        <div class="text-center my-5">
+                            {% if mensaje %}
+                            <h4>
+                                <p style="color:red" align="center" bgr="black">
+                                {{ mensaje }}
+                                </p>
+                            </h4>
+                            {% endif %}
+                            {% if mensaje2 %}
+                            <h4>
+                                <p style="color:white" align="center" bgr="black">
+                                {{ mensaje2 }}
+                                </p>
+                            </h4>
+                            {% endif %}
+                            {% if user.is_authenticated %}
+                            <h1 class="display-5 fw-bolder text-white mb-2" >¡Bienvenido {{ user.username }} a Maestre Inc.!</h1>
+                            {% else %}
+                            <h1 class="display-5 fw-bolder text-white mb-2" >¡Bienvenidos a Maestre Inc.!</h1>
+                            {% endif %}
+                            <p class="lead text-white-50 mb-4">¡Donde encontrarás, amigos, películas, videojuegos y mucho más!</p>
+                            <p class="lead text-white-50 mb-4">¿Qué quieres encontrar?</p>
+                            <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
+                                <a class="btn btn-light" href={% url  'buscarPelicula' %}>Películas</a>
+                                <a class="btn btn-light" href={% url 'buscarVideojuegos' %}>Videojuegos</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        {% endblock cabecera%}
+        {% block contenido %}
+        <!-- Features section-->
+        <section class="py-5 border-bottom" id="features">
+            <div class="container px-5 my-5">
+                <div class="row gx-5">
+                    <div class="col-lg-4 mb-5 mb-lg-0">
+                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-person-lines-fill"></i></div>
+                        <h2 class="h4 fw-bolder">Conoce a Amigos</h2>
+                        <p>¡Puedes conocer a otros clientes que comparten la misma pasion que tu!</p>
+                        <a class="text-decoration-none" href={% url 'clientes' %}>
+                            Conoce a los Amigos
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 mb-5 mb-lg-0">
+                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-film"></i></div>
+                        <h2 class="h4 fw-bolder">Las mejores Películas</h2>
+                        <p>¡Conoce el listado de películas que tenemos para ti!</p>
+                        <a class="text-decoration-none" href={% url  'peliculas' %}>
+                            Listado de Películas
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-joystick"></i></div>
+                        <h2 class="h4 fw-bolder">Los Videojuegos más divertidos</h2>
+                        <p>¡Conoce el listado de videojuegos que tenemos disponibles para tu diversión!</p>
+                        <a class="text-decoration-none" href={% url 'videojuegos' %}>
+                            Listado de Videojuegos
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        {% endblock contenido %}
+        <!-- Footer-->
+        <footer class="py-5 bg-dark">
+            <div class="container px-5"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
+        </footer>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src={% static 'aplicacion/js/scripts.js' %}></script>
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <!-- * *                               SB Forms JS                               * *-->
+        <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+    </body>
+</html>
